@@ -79,6 +79,7 @@ public class PieceManager : MonoBehaviour
 
     };
 
+    public GameManager gameManager;
     public DeadListManager deadManager;
 
     
@@ -91,7 +92,7 @@ public class PieceManager : MonoBehaviour
         PlacePieces(0, 3, whitePieces, board);
         PlacePieces(5, 8, blackPieces, board);
 
-        SwitchSides(Color.black);
+        
     }
 
     private List<BasePiece> CreatePieces(Color teamColor, Color32 spriteColor, Board board)
@@ -113,9 +114,7 @@ public class PieceManager : MonoBehaviour
             newPiece.rank = pieceRanks[key];
             newPiece.pieceType = key;
             AssignSprite(teamColor, newPiece.pieceType, pieceImg);
-            //add image
-
-
+            
             newPieces.Add(newPiece);
             newPiece.Setup(teamColor, spriteColor, this);
 
@@ -259,7 +258,7 @@ public class PieceManager : MonoBehaviour
         if (gameOver)
         {
             //GGs screen
-            Debug.Log("GGS");
+            gameManager.EndGame(color);
             
         }
 

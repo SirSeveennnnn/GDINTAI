@@ -76,6 +76,31 @@ public class BasePiece : EventTrigger
 
     }
 
+    private void PregameCellPath(Color teamColor)
+    {
+        if (teamColor == Color.white)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    highlightedCell.Add(currentCell.board.allCells[i, j]);
+                }
+            }
+        }
+
+        if (teamColor == Color.black)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 5; j < 8; j++)
+                {
+                    highlightedCell.Add(currentCell.board.allCells[i, j]);
+                }
+            }
+        }
+    }
+
     //Movements
     private void ShowCells()
     {
@@ -100,8 +125,18 @@ public class BasePiece : EventTrigger
     {
         base.OnBeginDrag(eventData);
 
-        CreateCellPath();
-        ShowCells();
+        if (GameManager.pregame == true)
+        {
+            PregameCellPath(this.color);
+            ShowCells();
+        }
+
+        if (GameManager.pregame == false)
+        {
+            CreateCellPath();
+            ShowCells();
+        }
+        
 
     }
 
@@ -120,7 +155,7 @@ public class BasePiece : EventTrigger
 
             targetCell = null;
         }
-
+        
         
     }
 
@@ -135,8 +170,19 @@ public class BasePiece : EventTrigger
             return;
         }
 
-        Move();
-        pieceManager.SwitchSides(color);
+        if (GameManager.pregame == true)
+        {
+            //Swap
+            Swap();
+
+        }
+        else if (GameManager.pregame == false)
+        {
+            Move();
+            pieceManager.SwitchSides(color);
+        }
+
+        
     }
 
     public void Kill()
@@ -157,6 +203,42 @@ public class BasePiece : EventTrigger
 
         currentCell.currentPiece = null;
         gameObject.SetActive(false);
+    }
+
+    public void Swap()
+    {
+        
+        if (targetCell.currentPiece != null)
+        {
+            BasePiece targetPiece;
+            Cell currentTempCell;
+            targetPiece = targetCell.currentPiece;
+
+            targetCell.currentPiece = this;
+            currentCell.currentPiece = targetPiece;
+
+            transform.position = targetCell.transform.position;
+            targetPiece.transform.position = currentCell.transform.position;
+
+            currentTempCell = currentCell;
+
+            currentCell = targetCell;
+            targetPiece.currentCell = currentTempCell;
+
+            targetCell = null;
+            targetPiece.targetCell = null;
+            ////////////////////////////////////////////////////////////////
+
+            return;
+
+        }
+
+        currentCell.currentPiece = null;
+        currentCell = targetCell;
+        currentCell.currentPiece = this;
+        transform.position = currentCell.transform.position;
+        targetCell = null;
+
     }
 
     public void Move()
