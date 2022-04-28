@@ -85,8 +85,8 @@ public class PieceManager : MonoBehaviour
 
     public void Setup(Board board)
     {
-        whitePieces = CreatePieces(Color.white, new Color32(80, 124, 159, 255), board);
-        blackPieces = CreatePieces(Color.black, new Color32(210, 95, 64, 255), board);
+        whitePieces = CreatePieces(Color.white, new Color32(255, 255, 255, 255), board);
+        blackPieces = CreatePieces(Color.black, new Color32(255, 255, 255, 255), board);
 
         PlacePieces(0, 3, whitePieces, board);
         PlacePieces(5, 8, blackPieces, board);
@@ -109,7 +109,7 @@ public class PieceManager : MonoBehaviour
 
             PieceType key = pieceOrder[i];
             BasePiece newPiece = newPieceObject.GetComponent<BasePiece>();
-            Image pieceImg = newPieceObject.GetComponentInChildren<Image>();
+            Image pieceImg = newPieceObject.GetComponent<Image>();
             newPiece.rank = pieceRanks[key];
             newPiece.pieceType = key;
             AssignSprite(teamColor, newPiece.pieceType, pieceImg);

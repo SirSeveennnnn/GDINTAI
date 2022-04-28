@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    static bool pregame = true;
     public Board board;
     public PieceManager pieceManager;
 
