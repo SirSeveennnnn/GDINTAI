@@ -31,7 +31,7 @@ public class PieceManager : MonoBehaviour
 
     private List<BasePiece> whitePieces = null;
     private List<BasePiece> blackPieces = null;
-    public bool areFlagsAlive = true;
+    public bool gameOver = false;
 
     private Dictionary<PieceType, int> pieceRanks = new Dictionary<PieceType, int>() {
 
@@ -256,9 +256,10 @@ public class PieceManager : MonoBehaviour
 
     public void SwitchSides(Color color)
     {
-        if (!areFlagsAlive)
+        if (gameOver)
         {
             //GGs screen
+            Debug.Log("GGS");
             
         }
 

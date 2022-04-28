@@ -143,7 +143,7 @@ public class BasePiece : EventTrigger
     {
         if (this.pieceType == PieceType.Flag)
         {
-            pieceManager.areFlagsAlive = false;
+            pieceManager.gameOver = true;
         }
 
         if (this.color == Color.white)
@@ -167,6 +167,16 @@ public class BasePiece : EventTrigger
         {
             this.Kill();
             return;
+        }
+
+        if (this.pieceType == PieceType.Flag && this.color == Color.white && targetCell.boardPosition.y == 8)
+        {
+            pieceManager.gameOver = true;
+        }
+
+        if (this.pieceType == PieceType.Flag && this.color == Color.black && targetCell.boardPosition.y == 0)
+        {
+            pieceManager.gameOver = true;
         }
 
         currentCell.currentPiece = null;
