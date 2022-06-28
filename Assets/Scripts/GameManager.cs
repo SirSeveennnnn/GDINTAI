@@ -19,6 +19,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject pauseWindow;
 
+    [SerializeField]
+    private GameObject agentDeadlist;
+
+    [SerializeField]
+    private GameObject playerDeadlist;
+
     [Space(10)]
 
     public Board board;
@@ -39,6 +45,9 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         pregameWindow.SetActive(false);
+        agentDeadlist.SetActive(true);
+        playerDeadlist.SetActive(true);
+
         pregame = false;
 
         pieceManager.SwitchSides(Color.black);
