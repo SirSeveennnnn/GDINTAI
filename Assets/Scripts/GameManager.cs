@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     {
         board.Create();
         pieceManager.Setup(board);
+        pieceManager.DisableBlackPieceInteractive();
     }
 
     void Update()

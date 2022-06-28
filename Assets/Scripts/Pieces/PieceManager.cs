@@ -253,6 +253,14 @@ public class PieceManager : MonoBehaviour
 
     }
 
+    public void DisableBlackPieceInteractive()
+    {
+        foreach (BasePiece piece in blackPieces)
+        {
+            piece.enabled = false;
+        }
+    }
+
     public void SwitchSides(Color color)
     {
         if (gameOver)
@@ -265,7 +273,7 @@ public class PieceManager : MonoBehaviour
         bool isBlacksTurn = color == Color.white ? true : false;
 
         SetInteractive(whitePieces, !isBlacksTurn);
-        SetInteractive(blackPieces, isBlacksTurn);
+        //SetInteractive(blackPieces, isBlacksTurn); //for multiplayer
     }
 
 }
