@@ -1170,6 +1170,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 792119361}
     - target: {fileID: 8886842298214364218, guid: 7580150619972cb4abdc0d6f09a15b76, type: 3}
+      propertyPath: agentDeadlist
+      value: 
+      objectReference: {fileID: 868093717}
+    - target: {fileID: 8886842298214364218, guid: 7580150619972cb4abdc0d6f09a15b76, type: 3}
       propertyPath: pregameWindow
       value: 
       objectReference: {fileID: 1427691602}
@@ -1177,6 +1181,10 @@ PrefabInstance:
       propertyPath: gameOverWindow
       value: 
       objectReference: {fileID: 387891574}
+    - target: {fileID: 8886842298214364218, guid: 7580150619972cb4abdc0d6f09a15b76, type: 3}
+      propertyPath: playerDeadlist
+      value: 
+      objectReference: {fileID: 2110065486}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7580150619972cb4abdc0d6f09a15b76, type: 3}
 --- !u!1 &386425712
@@ -2345,7 +2353,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &868093718
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5608,7 +5616,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2110065487
 RectTransform:
   m_ObjectHideFlags: 0
