@@ -33,6 +33,8 @@ public class PieceManager : MonoBehaviour
     private List<BasePiece> blackPieces = null;
     public bool gameOver = false;
 
+    public AI_Agent agent;
+
     private Dictionary<PieceType, int> pieceRanks = new Dictionary<PieceType, int>() {
 
         {PieceType.General5, 13},
@@ -179,54 +181,7 @@ public class PieceManager : MonoBehaviour
 
         if (teamColor == Color.black)
         {
-            switch (type)
-            {
-                case PieceType.General5:
-                    image.sprite = pieceSprite[29];
-                    break;
-                case PieceType.General4:
-                    image.sprite = pieceSprite[28];
-                    break;
-                case PieceType.General3:
-                    image.sprite = pieceSprite[27];
-                    break;
-                case PieceType.General2:
-                    image.sprite = pieceSprite[26];
-                    break;
-                case PieceType.General1:
-                    image.sprite = pieceSprite[25];
-                    break;
-                case PieceType.Colonel:
-                    image.sprite = pieceSprite[24];
-                    break;
-                case PieceType.LtColonel:
-                    image.sprite = pieceSprite[23];
-                    break;
-                case PieceType.Major:
-                    image.sprite = pieceSprite[22];
-                    break;
-                case PieceType.Captain:
-                    image.sprite = pieceSprite[21];
-                    break;
-                case PieceType.Lieutentant1:
-                    image.sprite = pieceSprite[20];
-                    break;
-                case PieceType.Lieutentant2:
-                    image.sprite = pieceSprite[19];
-                    break;
-                case PieceType.Sergeant:
-                    image.sprite = pieceSprite[18];
-                    break;
-                case PieceType.Private:
-                    image.sprite = pieceSprite[17];
-                    break;
-                case PieceType.Spy:
-                    image.sprite = pieceSprite[16];
-                    break;
-                case PieceType.Flag:
-                    image.sprite = pieceSprite[15];
-                    break;
-            }
+            image.sprite = pieceSprite[30];
         }
 
     }

@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject playerDeadlist;
 
+    [SerializeField]
+    private AI_Agent agent;
+
     [Space(10)]
 
     public Board board;

@@ -180,6 +180,7 @@ public class BasePiece : EventTrigger
         {
             Move();
             pieceManager.SwitchSides(color);
+            pieceManager.agent.AgentStart();
         }
 
         
