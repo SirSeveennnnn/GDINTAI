@@ -15,4 +15,9 @@ public class BoardState
 
     
 
+    private void CalculateHeuristic()
+    {
+        
+    }
+
 }
