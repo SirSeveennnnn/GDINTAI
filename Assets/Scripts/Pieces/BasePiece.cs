@@ -23,6 +23,9 @@ public class BasePiece : EventTrigger
 
     //Movement
     private List<Cell> highlightedCell = new List<Cell>();
+
+
+    [SerializeField]
     private Cell targetCell = null;
 
     public void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
@@ -180,7 +183,7 @@ public class BasePiece : EventTrigger
         {
             Move();
             pieceManager.SwitchSides(color);
-            pieceManager.agent.AgentStart();
+            pieceManager.agent.AgentMove();
         }
 
         

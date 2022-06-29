@@ -1154,6 +1154,10 @@ PrefabInstance:
       value: GameManager_Prefab
       objectReference: {fileID: 0}
     - target: {fileID: 8886842298214364218, guid: 7580150619972cb4abdc0d6f09a15b76, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 523537906}
+    - target: {fileID: 8886842298214364218, guid: 7580150619972cb4abdc0d6f09a15b76, type: 3}
       propertyPath: board
       value: 
       objectReference: {fileID: 1067443005}
@@ -1774,6 +1778,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &523537905
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 523537907}
+  - component: {fileID: 523537906}
+  m_Layer: 0
+  m_Name: AI Agent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &523537906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523537905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f75727667e300346815b0c5f6f7915f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &523537907
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523537905}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &668010413
 GameObject:
@@ -3294,6 +3342,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 30043632}
     m_Modifications:
     - target: {fileID: 4447267532231922251, guid: ea74682dabaa5664db1cf80e655045e8, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 523537906}
+    - target: {fileID: 4447267532231922251, guid: ea74682dabaa5664db1cf80e655045e8, type: 3}
       propertyPath: deadManager
       value: 
       objectReference: {fileID: 949588092}
@@ -3303,7 +3355,7 @@ PrefabInstance:
       objectReference: {fileID: 316775649}
     - target: {fileID: 4447267532231922251, guid: ea74682dabaa5664db1cf80e655045e8, type: 3}
       propertyPath: pieceSprite.Array.size
-      value: 30
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 4447267532231922251, guid: ea74682dabaa5664db1cf80e655045e8, type: 3}
       propertyPath: pieceSprite.Array.data[0]
@@ -3425,6 +3477,10 @@ PrefabInstance:
       propertyPath: pieceSprite.Array.data[29]
       value: 
       objectReference: {fileID: 21300000, guid: b9ed1bb5fe336824aae684b763cfcdf8, type: 3}
+    - target: {fileID: 4447267532231922251, guid: ea74682dabaa5664db1cf80e655045e8, type: 3}
+      propertyPath: pieceSprite.Array.data[30]
+      value: 
+      objectReference: {fileID: 21300000, guid: af2b89714af84134899c553a670f8ddf, type: 3}
     - target: {fileID: 5679011193256540656, guid: ea74682dabaa5664db1cf80e655045e8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

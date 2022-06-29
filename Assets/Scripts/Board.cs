@@ -16,7 +16,7 @@ public class Board : MonoBehaviour
 {
     public GameObject cellPrefab;
 
-    [HideInInspector]
+    [SerializeField]
     public Cell[,] allCells = new Cell[9, 8];
 
     public void Create()
@@ -77,5 +77,10 @@ public class Board : MonoBehaviour
         }
 
         return CellState.Free;
+    }
+
+    public Cell GetCell(int row, int col)
+    {
+        return allCells[row, col];
     }
 }
