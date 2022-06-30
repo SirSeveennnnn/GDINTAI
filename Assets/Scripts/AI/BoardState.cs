@@ -66,100 +66,77 @@ public class BoardState
 
     private void ScanAgentMoves()
     {
-        int[] move = { -1, 1 };
-
         foreach (Cell cell in agentPieces)
         {
-            for (int i = 0; i < move.Length; i++)
+            for (int i = -1; i < 2; i++)
             {
-                int row = cell.boardPosition.y + move[i];
-                int col = cell.boardPosition.x;
-
-                if (row >= 0 && row < 8) // check if out of bounds
+                for (int j = -1; j < 2; j++)
                 {
-                    if (board.allCells[col, row].currentPiece == null || board.allCells[col, row].currentPiece.color != Color.black) // check what the cell contains
+                    if (i + j == -1 || i + j == 1)
                     {
-                        if (!agentMoves.Contains(board.allCells[col, row])) // check list if cell is not yet an element 
-                        {
-                            agentMoves.Add(board.allCells[col, row]);
-                            //Debug.Log(col + " " + row);
-                        }
+                        int row = cell.boardPosition.y + i;
+                        int col = cell.boardPosition.x + j;
 
-                        if (board.allCells[col, row].currentPiece.color == Color.white)
+                        if (row >= 0  && row < 8 && col >= 0 && col < 9) // check if out of bounds
                         {
-                            offenseScore++;
-                        }
-                    }
-                }
+                            if (board.allCells[col, row].currentPiece == null || board.allCells[col, row].currentPiece.color != Color.black) // check what the cell contains
+                            {
+                                if (!agentMoves.Contains(board.allCells[col, row])) // check list if cell is not yet an element 
+                                {
+                                    agentMoves.Add(board.allCells[col, row]);
+                                    //Debug.Log(col + " " + row);
+                                }
 
-                row = cell.boardPosition.y;
-                col = cell.boardPosition.x + move[i];
-
-                if (col >= 0 && col < 9) // check if out of bounds
-                {
-                    if (board.allCells[col, row].currentPiece == null || board.allCells[col, row].currentPiece.color != Color.black) // check what the cell contains
-                    {
-                        if (!agentMoves.Contains(board.allCells[col, row])) // check list if cell is not yet an element 
-                        {
-                            agentMoves.Add(board.allCells[col, row]);
-                            //Debug.Log(col + " " + row);
-                        }
-
-                        if (board.allCells[col, row].currentPiece.color == Color.white)
-                        {
-                            offenseScore++;
+                                if (board.allCells[col, row].currentPiece != null && board.allCells[col, row].currentPiece.color == Color.white)
+                                {
+                                    offenseScore++;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
+
+        //Debug.Log(offenseScore);
     }
 
 
     private void ScanPlayerMoves()
     {
-        int[] move = { -1, 1 };
-
         foreach (CellData cell in playerPieces)
         {
-            for (int i = 0; i < move.Length; i++)
+            for (int i = -1; i < 2; i++)
             {
-                if (cell.row + move[i] >= 0 && cell.row + move[i] < 8) // check if out of bounds
+                for (int j = -1; j < 2; j++)
                 {
-                    if (board.allCells[cell.column, cell.row + move[i]].currentPiece == null || board.allCells[cell.column, cell.row + move[i]].currentPiece.color != Color.white) // check what the cell contains
+                    if (i + j == -1 || i + j == 1)
                     {
-                        if (!playerMoves.Contains(board.allCells[cell.column, cell.row + move[i]])) // check list if cell is not yet an element 
-                        {
-                            playerMoves.Add(board.allCells[cell.column, cell.row + move[i]]);
-                            Debug.Log(cell.column + " " + (cell.row + move[i]));
-                        }
+                        int row = cell.row + i;
+                        int col = cell.column + j;
 
-                        if (board.allCells[cell.column, cell.row + move[i]].currentPiece.color == Color.black)
+                        if (row >= 0 && row < 8 && col >= 0 && col < 9)
                         {
-                            defenseScore++;
-                        }
-                    }
-                }
+                            if (board.allCells[col, row].currentPiece == null || board.allCells[col, row].currentPiece.color != Color.white)
+                            {
+                                if (!playerMoves.Contains(board.allCells[col, row])) // check list if cell is not yet an element 
+                                {
+                                    playerMoves.Add(board.allCells[col, row]);
+                                    Debug.Log(col+ " " + row);
+                                }
 
-
-                if (cell.column + move[i] >= 0 && cell.column + move[i] < 9) // check if out of bounds
-                {
-                    if (board.allCells[cell.column + move[i], cell.row].currentPiece == null || board.allCells[cell.column + move[i], cell.row].currentPiece.color != Color.white) // check what the cell contains
-                    {
-                        if (!playerMoves.Contains(board.allCells[cell.column + move[i], cell.row])) // check list if cell is not yet an element 
-                        {
-                            playerMoves.Add(board.allCells[cell.column + move[i], cell.row]);
-                            Debug.Log((cell.column + move[i]) + " " + cell.row);
-                        }
-
-                        if (board.allCells[cell.column, cell.row + move[i]].currentPiece.color == Color.black)
-                        {
-                            defenseScore++;
+                                if (board.allCells[col, row].currentPiece != null && board.allCells[col, row].currentPiece.color == Color.black)
+                                {
+                                    defenseScore++;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
+
+        //Debug.Log(defenseScore);
     }
 
 
