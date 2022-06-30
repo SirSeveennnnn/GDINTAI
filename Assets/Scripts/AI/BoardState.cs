@@ -13,13 +13,16 @@ public class BoardState
     public List<BoardState> children;
 
     private Board board;
-    private List<CellData> playerPieces;
-    private List<Cell> playerMoves;
+    public List<CellData> playerPieces;
     public List<Cell> agentPieces;
-    public List<Cell> agentMoves; // size can give openness score
+    public List<KeyValuePair<CellData,Cell>> playerMoves;
+    public List<KeyValuePair<Cell, Cell>> agentMoves; // size can give openness score
+    public List<KeyValuePair<Cell, Cell>> capturingPieces;
 
-    private float offenseScore;
-    private float defenseScore;
+    public float offenseScore;
+    public float defenseScore;
+    public float opennessScore;
+    public float sumRankOffense;
 
 
     public void SetUp(Board newBoard)
@@ -32,6 +35,8 @@ public class BoardState
 
         offenseScore = 0;
         defenseScore = 0;
+        opennessScore = 0;
+        sumRankOffense = 0;
 
         ScanBoard();
         ScanAgentMoves();
@@ -66,6 +71,8 @@ public class BoardState
 
     private void ScanAgentMoves()
     {
+        List<Cell> openCells = new();
+
         foreach (Cell cell in agentPieces)
         {
             for (int i = -1; i < 2; i++)
@@ -81,16 +88,24 @@ public class BoardState
                         {
                             if (board.allCells[col, row].currentPiece == null || board.allCells[col, row].currentPiece.color != Color.black) // check what the cell contains
                             {
-                                if (!agentMoves.Contains(board.allCells[col, row])) // check list if cell is not yet an element 
+                                KeyValuePair<Cell, Cell> move = new(cell, board.allCells[col, row]);
+                                agentMoves.Add(move);
+
+                                if (!openCells.Contains(board.allCells[col, row])) // check list if cell is not yet an element 
                                 {
-                                    agentMoves.Add(board.allCells[col, row]);
-                                    //Debug.Log(col + " " + row);
+                                    openCells.Add(board.allCells[col, row]);
+                                    opennessScore++;
                                 }
 
                                 if (board.allCells[col, row].currentPiece != null && board.allCells[col, row].currentPiece.color == Color.white)
                                 {
+                                    KeyValuePair<Cell, Cell> capturingPiece = new(cell, board.allCells[col, row]);
+                                    capturingPieces.Add(capturingPiece);
+
                                     offenseScore++;
                                 }
+
+                                //Debug.Log(col + " " + row);
                             }
                         }
                     }
@@ -98,12 +113,15 @@ public class BoardState
             }
         }
 
+        openCells.Clear();
         //Debug.Log(offenseScore);
     }
 
 
     private void ScanPlayerMoves()
     {
+        List<Cell> agentCells = new();
+
         foreach (CellData cell in playerPieces)
         {
             for (int i = -1; i < 2; i++)
@@ -119,16 +137,16 @@ public class BoardState
                         {
                             if (board.allCells[col, row].currentPiece == null || board.allCells[col, row].currentPiece.color != Color.white)
                             {
-                                if (!playerMoves.Contains(board.allCells[col, row])) // check list if cell is not yet an element 
-                                {
-                                    playerMoves.Add(board.allCells[col, row]);
-                                    Debug.Log(col+ " " + row);
-                                }
+                                KeyValuePair<CellData, Cell> playerMove = new(cell, board.allCells[col, row]);
+                                playerMoves.Add(playerMove);
 
-                                if (board.allCells[col, row].currentPiece != null && board.allCells[col, row].currentPiece.color == Color.black)
+                                if (board.allCells[col, row].currentPiece != null && board.allCells[col, row].currentPiece.color == Color.black && !agentCells.Contains(board.allCells[col, row]))
                                 {
+                                    agentCells.Add(board.allCells[col, row]);
                                     defenseScore++;
                                 }
+
+                                Debug.Log(col + " " + row);
                             }
                         }
                     }
@@ -136,6 +154,7 @@ public class BoardState
             }
         }
 
+        agentCells.Clear();
         //Debug.Log(defenseScore);
     }
 
