@@ -7,18 +7,15 @@ public class AI_Agent : MonoBehaviour
     Board board;
     KeyValuePair<Cell,Cell> move;
 
-
     public void SetUp(Board newBoard)
     {
         board = newBoard;
     }
 
-
     public void SetUpPieces()
     {
         
     }
-
 
     public void AgentMove()
     {

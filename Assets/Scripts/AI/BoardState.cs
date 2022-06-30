@@ -16,6 +16,7 @@ public class BoardState
     public List<CellData> playerPieces;
     public List<Cell> agentPieces;
     public List<KeyValuePair<CellData,Cell>> playerMoves;
+
     public List<KeyValuePair<Cell, Cell>> agentMoves; // size can give openness score
     public List<KeyValuePair<Cell, Cell>> capturingPieces;
 
@@ -40,9 +41,10 @@ public class BoardState
 
         ScanBoard();
         ScanAgentMoves();
-        ScanPlayerMoves();
+        //ScanPlayerMoves();
+        bool risk = isFlagAtRisk();
+        
     }
-
 
     private void ScanBoard()
     {
@@ -158,11 +160,108 @@ public class BoardState
         //Debug.Log(defenseScore);
     }
 
+    private bool isFlagAtRisk()
+    {
+        int flagRow = 0, flagCol = 0;
 
+        foreach (Cell cell in agentPieces)
+        {
+            if (cell.currentPiece.pieceType == PieceType.Flag)
+            {
+                flagRow = cell.boardPosition.x;
+                flagCol = cell.boardPosition.y;
+            }
+
+        }
+
+        Debug.Log("flag is at" + "row: " + flagRow + " col: " + flagCol);
+
+        if (board.allCells[flagRow + 1, flagCol].currentPiece != null && board.allCells[flagRow + 1, flagCol].currentPiece.color == Color.white)
+        {
+            Debug.Log("flag at risk");
+            return true;
+        }
+
+        if (board.allCells[flagRow - 1, flagCol].currentPiece != null && board.allCells[flagRow - 1, flagCol].currentPiece.color == Color.white)
+        {
+            Debug.Log("flag at risk");
+            return true;
+        }
+
+        if (board.allCells[flagRow, flagCol + 1].currentPiece != null && board.allCells[flagRow, flagCol + 1].currentPiece.color == Color.white)
+        {
+            Debug.Log("flag at risk");
+            return true;
+        }
+
+        if (board.allCells[flagRow, flagCol - 1].currentPiece != null && board.allCells[flagRow, flagCol - 1].currentPiece.color == Color.white)
+        {
+            Debug.Log("flag at risk");
+            return true;
+        }
+
+        return false;
+    }
 
     private void CalculateHeuristic()
     {
         
+    }
+
+    private float GetPieceHeuristic(PieceType type)
+    {
+        switch (type)
+        {
+            case PieceType.General5:
+                return 7.8f;
+     
+            case PieceType.General4:
+                return 6.95f;
+      
+            case PieceType.General3:
+                return 6.15f;
+     
+            case PieceType.General2:
+                return 5.4f;
+    
+            case PieceType.General1:
+                return 5.7f;
+       
+            case PieceType.Colonel:
+                return 4.05f;
+           
+            case PieceType.LtColonel:
+                return 3.45f;
+          
+            case PieceType.Major:
+                return 2.9f;
+          
+            case PieceType.Captain:
+                return 2.4f;
+          
+            case PieceType.Lieutentant1:
+                return 1.95f;
+
+            case PieceType.Lieutentant2:
+                return 1.55f;
+        
+            case PieceType.Sergeant:
+                return 1.2f;
+       
+            case PieceType.Private:
+                return 1.37f;
+       
+            case PieceType.Spy:
+                return 7.5f;
+        
+            case PieceType.Flag:
+                return 0f;
+              
+            case PieceType.Unknown:
+                return 0;
+             
+        }
+        return 0f;
     }
 
 }
