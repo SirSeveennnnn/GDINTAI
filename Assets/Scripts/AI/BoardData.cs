@@ -6,7 +6,6 @@ public class BoardData
 {
     public Cell[,] allCells;
 
-
     public void CopyCells(Cell[,] copyCell)
     {
         allCells = copyCell;

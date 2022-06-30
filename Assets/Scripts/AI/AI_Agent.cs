@@ -32,9 +32,9 @@ public class AI_Agent : MonoBehaviour
         BoardState currentBoard = new();
         currentBoard.SetUp(board);
 
-        GenerateChildBoardStates(currentBoard, true, 0, 2, 7, 8);
+        //GenerateChildBoardStates(currentBoard, true, 0, 2, 7, 8);
         //GenerateChildBoardStatesCapture(currentBoard, true, 0, 2, 7, 8);
-        float bestScore = FindBestScore(currentBoard);
+        //float bestScore = FindBestScore(currentBoard);
         //Debug.Log("BestScore: " + bestScore);
 
         //BoardState favorableBoard = FindBestMove(currentBoard, moveIndex);
@@ -218,9 +218,8 @@ public class AI_Agent : MonoBehaviour
 
         //gameBoard.allCells[move.Key.boardPosition.x, move.Key.boardPosition.y].currentPiece.targetCell = gameBoard.allCells[move.Value.boardPosition.x, move.Value.boardPosition.y];
         //gameBoard.allCells[move.Key.boardPosition.x, move.Key.boardPosition.y].currentPiece.Move();
-        pieceManager.SwitchSides(Color.black);
 
-        moveIndex = 0;
+        moveIndex = -1;
 
     }
   
