@@ -28,11 +28,16 @@ public class BoardState
 
     public void SetUp(BoardData newBoard)
     {
+        parent = new();
+        children = new();
+        board = new();
         board.CopyCells(newBoard.allCells);
+
         playerPieces = new();
         agentPieces = new();
         playerMoves = new();
         agentMoves = new();
+        capturingPieces = new();
 
         offenseScore = 0;
         defenseScore = 0;

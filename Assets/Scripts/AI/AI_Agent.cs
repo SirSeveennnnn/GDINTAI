@@ -12,6 +12,7 @@ public class AI_Agent : MonoBehaviour
 
     public void SetUp(Board newBoard)
     {
+        board = new();
         board.CopyCells(newBoard.allCells);
     }
 
@@ -20,12 +21,10 @@ public class AI_Agent : MonoBehaviour
         Debug.Log("Agent Starts");
         //CreateSearchSpace();
 
-        BoardState currentBoard;
-        currentBoard = new();
+        BoardState currentBoard = new();
         currentBoard.SetUp(board);
 
         GenerateChildBoardStates(currentBoard);
-        
     }
 
     private void GenerateChildBoardStates(BoardState currentBoard)
@@ -34,7 +33,7 @@ public class AI_Agent : MonoBehaviour
         {
             //Debug.Log("x: " + move.Key.boardPosition.x + " y: " + move.Key.boardPosition.y + " To: " + " x: " + move.Value.boardPosition.x + " y: " + move.Value.boardPosition.y);
 
-            BoardData possibleBoard = new BoardData();
+            BoardData possibleBoard = new();
             possibleBoard.CopyCells(board.allCells);
 
             int row, col, moveRow, moveCol;
