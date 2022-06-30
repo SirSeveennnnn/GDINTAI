@@ -6,8 +6,15 @@ using UnityEngine;
 
 public class AI_Agent : MonoBehaviour
 {
+    [SerializeField]
+    Board gameBoard;
+
     BoardData board;
-    KeyValuePair<Cell,Cell> move;
+
+    [SerializeField]
+    PieceManager pieceManager;
+
+    int moveIndex;
 
 
     public void SetUp(Board newBoard)
@@ -26,7 +33,14 @@ public class AI_Agent : MonoBehaviour
         currentBoard.SetUp(board);
 
         GenerateChildBoardStates(currentBoard, true, 0, 2, 7, 8);
-        GenerateChildBoardStatesCapture(currentBoard, true, 0, 2, 7, 8);
+        //GenerateChildBoardStatesCapture(currentBoard, true, 0, 2, 7, 8);
+        float bestScore = FindBestScore(currentBoard);
+        //Debug.Log("BestScore: " + bestScore);
+
+        //BoardState favorableBoard = FindBestMove(currentBoard, moveIndex);
+        //AgentMovePiece(favorableBoard);
+
+        pieceManager.SwitchSides(Color.black);
     }
 
 
@@ -67,6 +81,7 @@ public class AI_Agent : MonoBehaviour
                 possibleBoard.allCells[moveCol, moveRow].currentPiece = piece;
 
                 BoardState boardState = new();
+                boardState.move = move;
                 boardState.SetUp(possibleBoard);
                 boardState.parent = currentBoard;
                 currentBoard.children.Add(boardState);
@@ -196,6 +211,39 @@ public class AI_Agent : MonoBehaviour
         storedIndices = null;
     }
 
+    private void AgentMovePiece(BoardState favourableBoard)
+    {
+        KeyValuePair<Cell, Cell> move = favourableBoard.move;
+        Debug.Log("x: " + move.Key.boardPosition.x + " y: " + move.Key.boardPosition.y + " To: " + " x: " + move.Value.boardPosition.x + " y: " + move.Value.boardPosition.y);
+
+        //gameBoard.allCells[move.Key.boardPosition.x, move.Key.boardPosition.y].currentPiece.targetCell = gameBoard.allCells[move.Value.boardPosition.x, move.Value.boardPosition.y];
+        //gameBoard.allCells[move.Key.boardPosition.x, move.Key.boardPosition.y].currentPiece.Move();
+        pieceManager.SwitchSides(Color.black);
+
+        moveIndex = 0;
+
+    }
+  
+    private float FindBestScore(BoardState currentBoard)
+    {
+        float saveScore = 0;
+       
+        for (int i = 0; i < currentBoard.children.Count; i++)
+        {
+            float tempScore = currentBoard.children[i].score + FindBestScore(currentBoard.children[i]);
+            if (tempScore > saveScore)
+            {
+                saveScore = tempScore;
+                moveIndex = i;
+            }
+        }
+        return saveScore;
+    }
+
+    private BoardState FindBestMove(BoardState currentBoard, int index)
+    {
+        return currentBoard.children[index];
+    }
 
     public void CreateSearchSpace()
     {

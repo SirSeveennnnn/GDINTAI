@@ -16,6 +16,8 @@ public class BoardState
     public List<CellData> playerPieces = new();
     public List<Cell> agentPieces = new();
 
+    public KeyValuePair<Cell, Cell> move;
+
     public List<KeyValuePair<CellData,Cell>> playerMoves = new();
     public List<KeyValuePair<Cell, Cell>> agentMoves = new(); 
     public List<KeyValuePair<Cell, Cell>> capturingPieces = new();
@@ -23,7 +25,7 @@ public class BoardState
     public float offenseScore = 0;
     public float defenseScore = 0;
     public float opennessScore = 0;
-    public float sumRankOffense = 0;
+    public float score = 0;
 
 
     public void SetUp(BoardData newBoard)
@@ -33,11 +35,23 @@ public class BoardState
         ScanBoard();
         ScanAgentMoves();
         ScanPlayerMoves();
+        FindOffensivePieces();
         bool risk = isFlagAtRisk();
-         
+
+        if (risk)
+        {
+            score = -999;
+        }
+        else
+        {
+            score = offenseScore + opennessScore - defenseScore;
+        }
+
         //Debug.Log("offense score:" + offenseScore);
         //Debug.Log("defensive score:" + defenseScore);
         //Debug.Log("openness score:" + opennessScore);
+
+        //Debug.Log("Final Score" + score);
     }
 
 
@@ -65,6 +79,16 @@ public class BoardState
         }
     }
 
+    private void FindOffensivePieces()
+    {
+        foreach (Cell cell in agentPieces)
+        {
+            if (cell.boardPosition.y < 4)
+            {
+                offenseScore += 1 * GetPieceHeuristic(cell.currentPiece.pieceType);
+            }
+        }
+    }
 
     private void ScanAgentMoves()
     {
@@ -99,7 +123,7 @@ public class BoardState
                                     KeyValuePair<Cell, Cell> capturingPiece = new(cell, board.allCells[col, row]);
                                     capturingPieces.Add(capturingPiece);
 
-                                    offenseScore++;
+                                    offenseScore += 1 * GetPieceHeuristic(board.allCells[col, row].currentPiece.pieceType);
                                 }
 
                                 
@@ -141,7 +165,7 @@ public class BoardState
                                 if (board.allCells[col, row].currentPiece != null && board.allCells[col, row].currentPiece.color == Color.black && !agentCells.Contains(board.allCells[col, row]))
                                 {
                                     agentCells.Add(board.allCells[col, row]);
-                                    defenseScore++;
+                                    defenseScore += 1 * GetPieceHeuristic(board.allCells[col, row].currentPiece.pieceType);
                                 }
 
                                 //Debug.Log(col + " " + row);
