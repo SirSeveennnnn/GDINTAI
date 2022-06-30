@@ -143,7 +143,7 @@ public class BoardState
                                     defenseScore++;
                                 }
 
-                                Debug.Log(col + " " + row);
+                                //Debug.Log(col + " " + row);
                             }
                         }
                     }
