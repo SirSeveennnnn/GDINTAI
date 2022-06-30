@@ -25,8 +25,8 @@ public class BasePiece : EventTrigger
     private List<Cell> highlightedCell = new List<Cell>();
 
 
-    [SerializeField]
-    private Cell targetCell = null;
+    
+    public Cell targetCell = null;
 
     public void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
     {

@@ -43,7 +43,12 @@ public class BoardState
         ScanAgentMoves();
         //ScanPlayerMoves();
         bool risk = isFlagAtRisk();
-        
+
+        Debug.Log("offense score:" + offenseScore);
+        Debug.Log("defensive score:" + defenseScore);
+        Debug.Log("openness score:" + opennessScore);
+
+
     }
 
     private void ScanBoard()
@@ -107,7 +112,7 @@ public class BoardState
                                     offenseScore++;
                                 }
 
-                                //Debug.Log(col + " " + row);
+                                
                             }
                         }
                     }
@@ -174,29 +179,23 @@ public class BoardState
 
         }
 
-        Debug.Log("flag is at" + "row: " + flagRow + " col: " + flagCol);
-
         if (board.allCells[flagRow + 1, flagCol].currentPiece != null && board.allCells[flagRow + 1, flagCol].currentPiece.color == Color.white)
         {
-            Debug.Log("flag at risk");
             return true;
         }
 
         if (board.allCells[flagRow - 1, flagCol].currentPiece != null && board.allCells[flagRow - 1, flagCol].currentPiece.color == Color.white)
         {
-            Debug.Log("flag at risk");
             return true;
         }
 
         if (board.allCells[flagRow, flagCol + 1].currentPiece != null && board.allCells[flagRow, flagCol + 1].currentPiece.color == Color.white)
         {
-            Debug.Log("flag at risk");
             return true;
         }
 
         if (board.allCells[flagRow, flagCol - 1].currentPiece != null && board.allCells[flagRow, flagCol - 1].currentPiece.color == Color.white)
         {
-            Debug.Log("flag at risk");
             return true;
         }
 
