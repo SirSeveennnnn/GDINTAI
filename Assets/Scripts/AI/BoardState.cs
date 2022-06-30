@@ -111,6 +111,7 @@ public class BoardState
         }
 
         openCells.Clear();
+        openCells = null;
         //Debug.Log(offenseScore);
     }
 
@@ -152,6 +153,7 @@ public class BoardState
         }
 
         agentCells.Clear();
+        agentCells = null;
         //Debug.Log(defenseScore);
     }
 
@@ -163,31 +165,44 @@ public class BoardState
         {
             if (cell.currentPiece.pieceType == PieceType.Flag)
             {
-                flagRow = cell.boardPosition.x;
-                flagCol = cell.boardPosition.y;
+                flagRow = cell.boardPosition.y;
+                flagCol = cell.boardPosition.x;
             }
 
         }
 
-        if (board.allCells[flagRow + 1, flagCol].currentPiece != null && board.allCells[flagRow + 1, flagCol].currentPiece.color == Color.white)
+        if (flagCol >= 0 && flagCol < 9 && flagRow + 1 >= 0 && flagRow + 1 < 8)
         {
-            return true;
+            if (board.allCells[flagCol, flagRow + 1].currentPiece != null && board.allCells[flagCol, flagRow + 1].currentPiece.color == Color.white)
+            {
+                return true;
+            }
         }
 
-        if (board.allCells[flagRow - 1, flagCol].currentPiece != null && board.allCells[flagRow - 1, flagCol].currentPiece.color == Color.white)
+        if (flagCol >= 0 && flagCol < 9 && flagRow - 1 >= 0 && flagRow - 1 < 8)
         {
-            return true;
+            if (board.allCells[flagCol, flagRow - 1].currentPiece != null && board.allCells[flagCol, flagRow - 1].currentPiece.color == Color.white)
+            {
+                return true;
+            }
         }
 
-        if (board.allCells[flagRow, flagCol + 1].currentPiece != null && board.allCells[flagRow, flagCol + 1].currentPiece.color == Color.white)
+        if (flagCol + 1 >= 0 && flagCol + 1 < 9 && flagRow >= 0 && flagRow < 8)
         {
-            return true;
+            if (board.allCells[flagCol + 1, flagRow].currentPiece != null && board.allCells[flagCol + 1, flagRow].currentPiece.color == Color.white)
+            {
+                return true;
+            }
         }
 
-        if (board.allCells[flagRow, flagCol - 1].currentPiece != null && board.allCells[flagRow, flagCol - 1].currentPiece.color == Color.white)
+        if (flagCol - 1 >= 0 && flagCol - 1 < 9 && flagRow + 1 >= 0 && flagRow + 1 < 8)
         {
-            return true;
+            if (board.allCells[flagCol - 1, flagRow].currentPiece != null && board.allCells[flagCol - 1, flagRow].currentPiece.color == Color.white)
+            {
+                return true;
+            }
         }
+
 
         return false;
     }
