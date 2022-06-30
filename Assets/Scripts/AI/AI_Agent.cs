@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AI_Agent : MonoBehaviour
 {
-    Board board;
+    BoardData board;
     KeyValuePair<Cell,Cell> move;
 
     
@@ -12,7 +12,7 @@ public class AI_Agent : MonoBehaviour
 
     public void SetUp(Board newBoard)
     {
-        board = newBoard;
+        board.CopyCells(newBoard.allCells);
     }
 
     public void AgentMove()
@@ -34,7 +34,8 @@ public class AI_Agent : MonoBehaviour
         {
             //Debug.Log("x: " + move.Key.boardPosition.x + " y: " + move.Key.boardPosition.y + " To: " + " x: " + move.Value.boardPosition.x + " y: " + move.Value.boardPosition.y);
 
-            Board possibleBoard = new Board(board);
+            BoardData possibleBoard = new BoardData();
+            possibleBoard.CopyCells(board.allCells);
 
             int row, col, moveRow, moveCol;
             row = move.Key.boardPosition.x;

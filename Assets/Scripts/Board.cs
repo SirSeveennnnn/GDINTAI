@@ -20,13 +20,6 @@ public class Board : MonoBehaviour
     public Cell[,] allCells = new Cell[9, 8];
 
 
-
-    public Board(Board copyBoard)
-    {
-        allCells = copyBoard.allCells;
-    }
-
-
     public void Create()
     {
         for (int i = 0; i < 9; i++)

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class SearchSpace : MonoBehaviour
 {
-    Board board;
+    BoardData board;
     BoardState rootState;
 
 
-    public void Initialize(Board newBoard, int nAgentMoves, int nPlayerMoves, int depth)
+    public void Initialize(BoardData newBoard, int nAgentMoves, int nPlayerMoves, int depth)
     {
         board = newBoard;
         rootState = new();

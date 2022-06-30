@@ -12,7 +12,7 @@ public class BoardState
     public BoardState parent;
     public List<BoardState> children;
 
-    private Board board;
+    private BoardData board;
     public List<CellData> playerPieces;
     public List<Cell> agentPieces;
     public List<KeyValuePair<CellData,Cell>> playerMoves;
@@ -26,9 +26,9 @@ public class BoardState
     public float sumRankOffense;
 
 
-    public void SetUp(Board newBoard)
+    public void SetUp(BoardData newBoard)
     {
-        board = newBoard;
+        board.CopyCells(newBoard.allCells);
         playerPieces = new();
         agentPieces = new();
         playerMoves = new();
@@ -43,10 +43,10 @@ public class BoardState
         ScanAgentMoves();
         //ScanPlayerMoves();
         bool risk = isFlagAtRisk();
-
-        Debug.Log("offense score:" + offenseScore);
-        Debug.Log("defensive score:" + defenseScore);
-        Debug.Log("openness score:" + opennessScore);
+         
+        //Debug.Log("offense score:" + offenseScore);
+        //Debug.Log("defensive score:" + defenseScore);
+        //Debug.Log("openness score:" + opennessScore);
 
 
     }
