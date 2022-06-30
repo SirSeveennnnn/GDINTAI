@@ -34,8 +34,7 @@ public class AI_Agent : MonoBehaviour
         {
             //Debug.Log("x: " + move.Key.boardPosition.x + " y: " + move.Key.boardPosition.y + " To: " + " x: " + move.Value.boardPosition.x + " y: " + move.Value.boardPosition.y);
 
-            Board possibleBoard = new Board();
-            possibleBoard = board;
+            Board possibleBoard = new Board(board);
 
             int row, col, moveRow, moveCol;
             row = move.Key.boardPosition.x;
