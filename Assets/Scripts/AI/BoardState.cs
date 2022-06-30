@@ -10,51 +10,36 @@ public class BoardState
     public List<float> scoreList;
 
     public BoardState parent;
-    public List<BoardState> children;
+    public List<BoardState> children = new();
 
-    private BoardData board;
-    public List<CellData> playerPieces;
-    public List<Cell> agentPieces;
-    public List<KeyValuePair<CellData,Cell>> playerMoves;
+    private BoardData board = new();
+    public List<CellData> playerPieces = new();
+    public List<Cell> agentPieces = new();
 
-    public List<KeyValuePair<Cell, Cell>> agentMoves; // size can give openness score
-    public List<KeyValuePair<Cell, Cell>> capturingPieces;
+    public List<KeyValuePair<CellData,Cell>> playerMoves = new();
+    public List<KeyValuePair<Cell, Cell>> agentMoves = new(); 
+    public List<KeyValuePair<Cell, Cell>> capturingPieces = new();
 
-    public float offenseScore;
-    public float defenseScore;
-    public float opennessScore;
-    public float sumRankOffense;
+    public float offenseScore = 0;
+    public float defenseScore = 0;
+    public float opennessScore = 0;
+    public float sumRankOffense = 0;
 
 
     public void SetUp(BoardData newBoard)
     {
-        parent = new();
-        children = new();
-        board = new();
         board.CopyCells(newBoard.allCells);
-
-        playerPieces = new();
-        agentPieces = new();
-        playerMoves = new();
-        agentMoves = new();
-        capturingPieces = new();
-
-        offenseScore = 0;
-        defenseScore = 0;
-        opennessScore = 0;
-        sumRankOffense = 0;
 
         ScanBoard();
         ScanAgentMoves();
-        //ScanPlayerMoves();
+        ScanPlayerMoves();
         bool risk = isFlagAtRisk();
          
         //Debug.Log("offense score:" + offenseScore);
         //Debug.Log("defensive score:" + defenseScore);
         //Debug.Log("openness score:" + opennessScore);
-
-
     }
+
 
     private void ScanBoard()
     {
