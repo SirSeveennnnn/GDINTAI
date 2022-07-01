@@ -161,7 +161,7 @@ public class BoardState
                                 if (board.allCells[col, row].pieceID != -1 && board.allCells[col, row].color == Color.black && !agentCells.Contains(board.allCells[col, row]))
                                 {
                                     agentCells.Add(board.allCells[col, row]);
-                                    defenseScore += 1 * GetPieceHeuristic(board.allCells[col, row].pieceType);
+                                    defenseScore += 2;
                                 }
 
                                 //Debug.Log(col + " " + row);

@@ -83,6 +83,32 @@ public class PieceManager : MonoBehaviour
 
     };
 
+    private PieceType[] ai_PieceOrder = new PieceType[21]
+    {
+        PieceType.Colonel,
+        PieceType.Private,
+        PieceType.General3,
+        PieceType.General4,
+        PieceType.Lieutentant1,
+        PieceType.Private,
+        PieceType.Captain,
+        PieceType.Private,
+        PieceType.Spy,
+        PieceType.Sergeant,
+        PieceType.Private,
+        PieceType.Lieutentant2,
+        PieceType.LtColonel,
+        PieceType.Private,
+        PieceType.General5,
+        PieceType.Flag,
+        PieceType.Spy,
+        PieceType.General1,
+        PieceType.Private,
+        PieceType.General2,
+        PieceType.Major
+
+    };
+
     public GameManager gameManager;
     public DeadListManager deadManager;
 
@@ -110,7 +136,18 @@ public class PieceManager : MonoBehaviour
             newPieceObject.transform.localScale = new Vector3(1, 1, 1);
             newPieceObject.transform.localRotation = Quaternion.identity;
 
-            PieceType key = pieceOrder[i];
+            PieceType key = PieceType.Unknown;
+
+            if (teamColor == Color.white)
+            {
+                 key = pieceOrder[i];
+            }
+            else if (teamColor == Color.black)
+            {
+                 key = ai_PieceOrder[i];
+            }
+
+
             BasePiece newPiece = newPieceObject.GetComponent<BasePiece>();
             Image pieceImg = newPieceObject.GetComponent<Image>();
             newPiece.rank = pieceRanks[key];

@@ -25,8 +25,8 @@ public class AI_Agent : MonoBehaviour
         BoardState currentBoard = new();
         currentBoard.SetUp(board);
 
-        GenerateChildBoardStates(currentBoard, true, 0, 2, 7, 8);
-        GenerateChildBoardStatesCapture(currentBoard, true, 0, 2, 7, 8);
+        GenerateChildBoardStates(currentBoard, true, 0, 4, 7, 8);
+        GenerateChildBoardStatesCapture(currentBoard, true, 0, 4, 7, 8);
 
 
         float bestScore = FindBestScore(currentBoard);
@@ -45,7 +45,6 @@ public class AI_Agent : MonoBehaviour
         pieceManager.SwitchSides(Color.black);
         EndTurn();
     }
-
 
     private void GenerateChildBoardStates(BoardState currentBoard, bool isAgent, int currentDepth, int maxDepth, int randAgent, int randPlayer)
     {
