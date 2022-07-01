@@ -95,8 +95,6 @@ public class PieceManager : MonoBehaviour
 
         PlacePieces(0, 3, whitePieces, board);
         PlacePieces(5, 8, blackPieces, board);
-
-        agent.SetUp(board);
     }
 
     private List<BasePiece> CreatePieces(Color teamColor, Color32 spriteColor, Board board)

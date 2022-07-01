@@ -17,20 +17,16 @@ public class AI_Agent : MonoBehaviour
     int moveIndex;
 
 
-    public void SetUp(Board newBoard)
-    {
-        board = new();
-        board.CopyCells(newBoard.allCells);
-    }
-
-
     public void AgentMove()
     {
+        board = new();
+        board.CopyCells(gameBoard.allCells);
+
         BoardState currentBoard = new();
         currentBoard.SetUp(board);
 
         GenerateChildBoardStates(currentBoard, true, 0, 2, 7, 8);
-        //GenerateChildBoardStatesCapture(currentBoard, true, 0, 2, 7, 8);
+        GenerateChildBoardStatesCapture(currentBoard, true, 0, 2, 7, 8);
 
 
         float bestScore = FindBestScore(currentBoard);
@@ -127,7 +123,7 @@ public class AI_Agent : MonoBehaviour
         storedIndices = null;
     }
 
-    /*
+    
     private void GenerateChildBoardStatesCapture(BoardState currentBoard, bool isAgent, int currentDepth, int maxDepth, int randAgent, int randPlayer)
     {
         List<int> storedIndices = new();
@@ -147,22 +143,22 @@ public class AI_Agent : MonoBehaviour
 
                 count += 1;
                 storedIndices.Add(index);
-                KeyValuePair<Cell, Cell> move = currentBoard.capturingPieces[index];
+                KeyValuePair<CellData, CellData> move = currentBoard.capturingPieces[index];
                 //Debug.Log("Agent  " + count + "  x: " + move.Key.boardPosition.x + " y: " + move.Key.boardPosition.y + " To: " + " x: " + move.Value.boardPosition.x + " y: " + move.Value.boardPosition.y);
 
 
                 BoardData possibleBoard = new();
-                possibleBoard.CopyCells(board.allCells);
+                possibleBoard.CopyCellData(board.allCells);
 
                 int row, col, moveRow, moveCol;
-                row = move.Key.boardPosition.y;
-                col = move.Key.boardPosition.x;
-                moveRow = move.Value.boardPosition.y;
-                moveCol = move.Value.boardPosition.x;
+                row = move.Key.row;
+                col = move.Key.column;
+                moveRow = move.Value.row;
+                moveCol = move.Value.column;
 
-                BasePiece piece = possibleBoard.allCells[col, row].currentPiece;
-                possibleBoard.allCells[col, row].currentPiece = null;
-                possibleBoard.allCells[moveCol, moveRow].currentPiece = piece;
+                int piece = possibleBoard.allCells[col, row].pieceID;
+                possibleBoard.allCells[col, row].pieceID = -1;
+                possibleBoard.allCells[moveCol, moveRow].pieceID = piece;
 
                 BoardState boardState = new();
                 boardState.SetUp(possibleBoard);
@@ -182,35 +178,35 @@ public class AI_Agent : MonoBehaviour
 
                 count += 1;
                 storedIndices.Add(index);
-                KeyValuePair<CellData, Cell> move = currentBoard.playerMoves[index];
+                KeyValuePair<CellData, CellData> move = currentBoard.playerMoves[index];
                 //Debug.Log("Player    " + count + "  x: " + move.Key.column + " y: " + move.Key.row + " To: " + " x: " + move.Value.boardPosition.x + " y: " + move.Value.boardPosition.y);
 
 
                 BoardData possibleBoard = new();
-                possibleBoard.CopyCells(board.allCells);
+                possibleBoard.CopyCellData(board.allCells);
 
                 int row, col, moveRow, moveCol;
                 row = move.Key.row;
                 col = move.Key.column;
-                moveRow = move.Value.boardPosition.y;
-                moveCol = move.Value.boardPosition.x;
+                moveRow = move.Value.row;
+                moveCol = move.Value.column;
 
-                BasePiece piece = possibleBoard.allCells[col, row].currentPiece;
-                possibleBoard.allCells[col, row].currentPiece = null;
-                possibleBoard.allCells[moveCol, moveRow].currentPiece = piece;
+                int piece = possibleBoard.allCells[col, row].pieceID;
+                possibleBoard.allCells[col, row].pieceID = -1;
+                possibleBoard.allCells[moveCol, moveRow].pieceID = piece;
 
                 BoardState boardState = new();
                 boardState.SetUp(possibleBoard);
                 boardState.parent = currentBoard;
                 currentBoard.children.Add(boardState);
-                GenerateChildBoardStatesCapture(boardState, !isAgent, currentDepth + 1, maxDepth, randAgent, randPlayer);
+                GenerateChildBoardStates(boardState, !isAgent, currentDepth + 1, maxDepth, randAgent, randPlayer);
             }
         }
 
         storedIndices.Clear();
         storedIndices = null;
     }
-    */
+    
 
     private void AgentMovePiece(BoardState favourableBoard)
     {
