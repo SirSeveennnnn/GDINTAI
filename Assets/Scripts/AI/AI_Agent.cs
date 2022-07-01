@@ -25,8 +25,8 @@ public class AI_Agent : MonoBehaviour
         BoardState currentBoard = new();
         currentBoard.SetUp(board);
 
-        GenerateChildBoardStates(currentBoard, true, 0, 4, 7, 8);
-        GenerateChildBoardStatesCapture(currentBoard, true, 0, 4, 7, 8);
+        GenerateChildBoardStates(currentBoard, true, 0, 4, 12, 10);
+        GenerateChildBoardStatesCapture(currentBoard, true, 0, 4, 12, 10);
 
 
         float bestScore = FindBestScore(currentBoard);
