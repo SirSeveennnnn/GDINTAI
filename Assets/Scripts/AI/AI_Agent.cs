@@ -32,10 +32,12 @@ public class AI_Agent : MonoBehaviour
         float bestScore = FindBestScore(currentBoard);
         BoardState favorableBoard = FindBestMove(currentBoard, moveIndex);
 
+        /*
         if (favorableBoard.move.Key == null)
             Debug.Log("null key");
-        else if (favorableBoard.move.Value == null)
+        if (favorableBoard.move.Value == null)
             Debug.Log("null val");
+        */
 
         AgentMovePiece(favorableBoard);
 
@@ -167,6 +169,7 @@ public class AI_Agent : MonoBehaviour
                 possibleBoard.allCells[moveCol, moveRow].pieceID = piece;
 
                 BoardState boardState = new();
+                boardState.move = move;
                 boardState.SetUp(possibleBoard);
                 boardState.parent = currentBoard;
                 currentBoard.children.Add(boardState);
@@ -202,6 +205,7 @@ public class AI_Agent : MonoBehaviour
                 possibleBoard.allCells[moveCol, moveRow].pieceID = piece;
 
                 BoardState boardState = new();
+                
                 boardState.SetUp(possibleBoard);
                 boardState.parent = currentBoard;
                 currentBoard.children.Add(boardState);
@@ -222,7 +226,7 @@ public class AI_Agent : MonoBehaviour
         gameBoard.allCells[move.Key.column, move.Key.row].currentPiece.targetCell = gameBoard.allCells[move.Value.column, move.Value.row];
         gameBoard.allCells[move.Key.column, move.Key.row].currentPiece.Move();
 
-        moveIndex = -1;
+        moveIndex = 0;
 
     }
   
@@ -237,13 +241,17 @@ public class AI_Agent : MonoBehaviour
             {
                 saveScore = tempScore;
                 moveIndex = i;
+                //Debug.Log("tempscore: " + tempScore);
             }
         }
+        //Debug.Log("savescore: " + saveScore);
         return saveScore;
     }
 
     private BoardState FindBestMove(BoardState currentBoard, int index)
     {
+        Debug.Log("current board moves: " + currentBoard.children.Count);
+        Debug.Log("index: " + index);
         return currentBoard.children[index];
     }
 

@@ -41,7 +41,7 @@ public class BoardState
         }
         else
         {
-            score = offenseScore + opennessScore - defenseScore;
+            score = (offenseScore * 2) + opennessScore - defenseScore;
         }
 
         //Debug.Log("offense score:" + offenseScore);
