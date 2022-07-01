@@ -31,6 +31,12 @@ public class AI_Agent : MonoBehaviour
 
         float bestScore = FindBestScore(currentBoard);
         BoardState favorableBoard = FindBestMove(currentBoard, moveIndex);
+
+        if (favorableBoard.move.Key == null)
+            Debug.Log("null key");
+        else if (favorableBoard.move.Value == null)
+            Debug.Log("null val");
+
         AgentMovePiece(favorableBoard);
 
 
@@ -138,7 +144,7 @@ public class AI_Agent : MonoBehaviour
             {
                 do
                 {
-                    index = rnd.Next(currentBoard.agentMoves.Count);
+                    index = rnd.Next(currentBoard.capturingPieces.Count);
                 } while (storedIndices.Contains(index));
 
                 count += 1;
@@ -211,7 +217,7 @@ public class AI_Agent : MonoBehaviour
     private void AgentMovePiece(BoardState favourableBoard)
     {
         KeyValuePair<CellData, CellData> move = favourableBoard.move;
-        Debug.Log("x: " + move.Key.column + " y: " + move.Key.row + " To: " + " x: " + move.Value.column + " y: " + move.Value.row);
+        //Debug.Log("x: " + move.Key.column + " y: " + move.Key.row + " To: " + " x: " + move.Value.column + " y: " + move.Value.row);
 
         gameBoard.allCells[move.Key.column, move.Key.row].currentPiece.targetCell = gameBoard.allCells[move.Value.column, move.Value.row];
         gameBoard.allCells[move.Key.column, move.Key.row].currentPiece.Move();
