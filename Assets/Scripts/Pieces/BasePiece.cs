@@ -7,6 +7,7 @@ using TMPro;
 
 public class BasePiece : EventTrigger
 {
+    public int ID;
     public Color color = Color.clear;
 
     private Cell originalCell = null;
@@ -270,7 +271,5 @@ public class BasePiece : EventTrigger
         currentCell.currentPiece = this;
         transform.position = currentCell.transform.position;
         targetCell = null;
-
-
     }
 }

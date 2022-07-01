@@ -4,23 +4,20 @@ using UnityEngine;
 
 public class BoardState
 {
-    public List<CellData> cells;
-    public Color teamColor;
-
-    public List<float> scoreList;
-
+    private BoardData board = new();
     public BoardState parent;
     public List<BoardState> children = new();
 
-    private BoardData board = new();
+    
     public List<CellData> playerPieces = new();
-    public List<Cell> agentPieces = new();
+    public List<CellData> agentPieces = new();
+    public List<KeyValuePair<CellData, CellData>> capturingPieces = new();
 
-    public KeyValuePair<Cell, Cell> move;
 
-    public List<KeyValuePair<CellData,Cell>> playerMoves = new();
-    public List<KeyValuePair<Cell, Cell>> agentMoves = new(); 
-    public List<KeyValuePair<Cell, Cell>> capturingPieces = new();
+    public KeyValuePair<CellData, CellData> move;
+    public List<KeyValuePair<CellData,CellData>> playerMoves = new();
+    public List<KeyValuePair<CellData, CellData>> agentMoves = new(); 
+    
 
     public float offenseScore = 0;
     public float defenseScore = 0;
@@ -30,7 +27,7 @@ public class BoardState
 
     public void SetUp(BoardData newBoard)
     {
-        board.CopyCells(newBoard.allCells);
+        board.CopyCellData(newBoard.allCells);
 
         ScanBoard();
         ScanAgentMoves();
@@ -50,7 +47,6 @@ public class BoardState
         //Debug.Log("offense score:" + offenseScore);
         //Debug.Log("defensive score:" + defenseScore);
         //Debug.Log("openness score:" + opennessScore);
-
         //Debug.Log("Final Score" + score);
     }
 
@@ -61,11 +57,11 @@ public class BoardState
         {
             for (int j = 0; j < 8; j++)
             {
-                if (board.allCells[i, j].currentPiece != null && board.allCells[i, j].currentPiece.color == Color.black)
+                if (board.allCells[i, j].pieceID != -1 && board.allCells[i, j].color == Color.black)
                 {
                     agentPieces.Add(board.allCells[i, j]);
                 }
-                else if (board.allCells[i, j].currentPiece != null && board.allCells[i, j].currentPiece.color == Color.white)
+                else if (board.allCells[i, j].pieceID != -1 && board.allCells[i, j].color == Color.white)
                 {
                     CellData cell = new();
                     cell.color = Color.white;
@@ -81,20 +77,20 @@ public class BoardState
 
     private void FindOffensivePieces()
     {
-        foreach (Cell cell in agentPieces)
+        foreach (CellData cell in agentPieces)
         {
-            if (cell.boardPosition.y < 4)
+            if (cell.row < 4)
             {
-                offenseScore += 1 * GetPieceHeuristic(cell.currentPiece.pieceType);
+                offenseScore += 1 * GetPieceHeuristic(cell.pieceType);
             }
         }
     }
 
     private void ScanAgentMoves()
     {
-        List<Cell> openCells = new();
+        List<CellData> openCells = new();
 
-        foreach (Cell cell in agentPieces)
+        foreach (CellData cell in agentPieces)
         {
             for (int i = -1; i < 2; i++)
             {
@@ -102,14 +98,14 @@ public class BoardState
                 {
                     if (i + j == -1 || i + j == 1)
                     {
-                        int row = cell.boardPosition.y + i;
-                        int col = cell.boardPosition.x + j;
+                        int row = cell.row + i;
+                        int col = cell.column + j;
 
                         if (row >= 0  && row < 8 && col >= 0 && col < 9) // check if out of bounds
                         {
-                            if (board.allCells[col, row].currentPiece == null || board.allCells[col, row].currentPiece.color != Color.black) // check what the cell contains
+                            if (board.allCells[col, row].pieceID == -1 || board.allCells[col, row].color != Color.black) // check what the cell contains
                             {
-                                KeyValuePair<Cell, Cell> move = new(cell, board.allCells[col, row]);
+                                KeyValuePair<CellData, CellData> move = new(cell, board.allCells[col, row]);
                                 agentMoves.Add(move);
 
                                 if (!openCells.Contains(board.allCells[col, row])) // check list if cell is not yet an element 
@@ -118,12 +114,12 @@ public class BoardState
                                     opennessScore++;
                                 }
 
-                                if (board.allCells[col, row].currentPiece != null && board.allCells[col, row].currentPiece.color == Color.white)
+                                if (board.allCells[col, row].pieceID != -1 && board.allCells[col, row].color == Color.white)
                                 {
-                                    KeyValuePair<Cell, Cell> capturingPiece = new(cell, board.allCells[col, row]);
+                                    KeyValuePair<CellData, CellData> capturingPiece = new(cell, board.allCells[col, row]);
                                     capturingPieces.Add(capturingPiece);
 
-                                    offenseScore += 1 * GetPieceHeuristic(board.allCells[col, row].currentPiece.pieceType);
+                                    offenseScore += 1 * GetPieceHeuristic(board.allCells[col, row].pieceType);
                                 }
 
                                 
@@ -142,7 +138,7 @@ public class BoardState
 
     private void ScanPlayerMoves()
     {
-        List<Cell> agentCells = new();
+        List<CellData> agentCells = new();
 
         foreach (CellData cell in playerPieces)
         {
@@ -157,15 +153,15 @@ public class BoardState
 
                         if (row >= 0 && row < 8 && col >= 0 && col < 9)
                         {
-                            if (board.allCells[col, row].currentPiece == null || board.allCells[col, row].currentPiece.color != Color.white)
+                            if (board.allCells[col, row].pieceID == -1 || board.allCells[col, row].color != Color.white)
                             {
-                                KeyValuePair<CellData, Cell> playerMove = new(cell, board.allCells[col, row]);
+                                KeyValuePair<CellData, CellData> playerMove = new(cell, board.allCells[col, row]);
                                 playerMoves.Add(playerMove);
 
-                                if (board.allCells[col, row].currentPiece != null && board.allCells[col, row].currentPiece.color == Color.black && !agentCells.Contains(board.allCells[col, row]))
+                                if (board.allCells[col, row].pieceID != -1 && board.allCells[col, row].color == Color.black && !agentCells.Contains(board.allCells[col, row]))
                                 {
                                     agentCells.Add(board.allCells[col, row]);
-                                    defenseScore += 1 * GetPieceHeuristic(board.allCells[col, row].currentPiece.pieceType);
+                                    defenseScore += 1 * GetPieceHeuristic(board.allCells[col, row].pieceType);
                                 }
 
                                 //Debug.Log(col + " " + row);
@@ -185,19 +181,19 @@ public class BoardState
     {
         int flagRow = 0, flagCol = 0;
 
-        foreach (Cell cell in agentPieces)
+        foreach (CellData cell in agentPieces)
         {
-            if (cell.currentPiece.pieceType == PieceType.Flag)
+            if (cell.pieceType == PieceType.Flag)
             {
-                flagRow = cell.boardPosition.y;
-                flagCol = cell.boardPosition.x;
+                flagRow = cell.row;
+                flagCol = cell.column;
             }
 
         }
 
         if (flagCol >= 0 && flagCol < 9 && flagRow + 1 >= 0 && flagRow + 1 < 8)
         {
-            if (board.allCells[flagCol, flagRow + 1].currentPiece != null && board.allCells[flagCol, flagRow + 1].currentPiece.color == Color.white)
+            if (board.allCells[flagCol, flagRow + 1].pieceID != -1 && board.allCells[flagCol, flagRow + 1].color == Color.white)
             {
                 return true;
             }
@@ -205,7 +201,7 @@ public class BoardState
 
         if (flagCol >= 0 && flagCol < 9 && flagRow - 1 >= 0 && flagRow - 1 < 8)
         {
-            if (board.allCells[flagCol, flagRow - 1].currentPiece != null && board.allCells[flagCol, flagRow - 1].currentPiece.color == Color.white)
+            if (board.allCells[flagCol, flagRow - 1].pieceID != -1 && board.allCells[flagCol, flagRow - 1].color == Color.white)
             {
                 return true;
             }
@@ -213,7 +209,7 @@ public class BoardState
 
         if (flagCol + 1 >= 0 && flagCol + 1 < 9 && flagRow >= 0 && flagRow < 8)
         {
-            if (board.allCells[flagCol + 1, flagRow].currentPiece != null && board.allCells[flagCol + 1, flagRow].currentPiece.color == Color.white)
+            if (board.allCells[flagCol + 1, flagRow].pieceID != -1 && board.allCells[flagCol + 1, flagRow].color == Color.white)
             {
                 return true;
             }
@@ -221,7 +217,7 @@ public class BoardState
 
         if (flagCol - 1 >= 0 && flagCol - 1 < 9 && flagRow + 1 >= 0 && flagRow + 1 < 8)
         {
-            if (board.allCells[flagCol - 1, flagRow].currentPiece != null && board.allCells[flagCol - 1, flagRow].currentPiece.color == Color.white)
+            if (board.allCells[flagCol - 1, flagRow].pieceID != -1 && board.allCells[flagCol - 1, flagRow].color == Color.white)
             {
                 return true;
             }

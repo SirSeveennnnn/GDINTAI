@@ -32,6 +32,7 @@ public class PieceManager : MonoBehaviour
 
     private List<BasePiece> whitePieces = null;
     private List<BasePiece> blackPieces = null;
+    private int countID = 0;
     public bool gameOver = false;
 
     public AI_Agent agent;
@@ -120,6 +121,7 @@ public class PieceManager : MonoBehaviour
             
             newPieces.Add(newPiece);
             newPiece.Setup(teamColor, spriteColor, this);
+            newPiece.ID = countID; countID++;
 
         }
 
