@@ -41,8 +41,11 @@ public class BoardState
         }
         else
         {
-            score = (offenseScore * 2) + opennessScore - defenseScore;
+            score = (offenseScore * 2) + (opennessScore * 1.2f) - (defenseScore * 1.0f);
         }
+
+        //Debug.Log("Agent Pieces: " + agentPieces.Count);
+        //Debug.Log("Player Pieces: " + playerPieces.Count);
 
         //Debug.Log("offense score:" + offenseScore);
         //Debug.Log("defensive score:" + defenseScore);
@@ -119,7 +122,7 @@ public class BoardState
                                     KeyValuePair<CellData, CellData> capturingPiece = new(cell, board.allCells[col, row]);
                                     capturingPieces.Add(capturingPiece);
 
-                                    offenseScore += 1 * GetPieceHeuristic(board.allCells[col, row].pieceType);
+                                    offenseScore += 1 * GetPieceHeuristic(board.allCells[col, row].pieceType) * 10;
                                 }
 
                                 

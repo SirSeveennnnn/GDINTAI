@@ -85,27 +85,27 @@ public class PieceManager : MonoBehaviour
 
     private PieceType[] ai_PieceOrder = new PieceType[21]
     {
+        PieceType.Private,
+        PieceType.Spy,
+        PieceType.General4,
+        PieceType.Private,
+        PieceType.General5,
+        PieceType.Spy,
+        PieceType.Private,
+        PieceType.Major,
+        PieceType.General2,
+        PieceType.LtColonel,
+        PieceType.Private,
+        PieceType.Captain,
+        PieceType.Lieutentant2,
         PieceType.Colonel,
         PieceType.Private,
         PieceType.General3,
-        PieceType.General4,
+        PieceType.Flag,
+        PieceType.Sergeant,
         PieceType.Lieutentant1,
         PieceType.Private,
-        PieceType.Captain,
-        PieceType.Private,
-        PieceType.Spy,
-        PieceType.Sergeant,
-        PieceType.Private,
-        PieceType.Lieutentant2,
-        PieceType.LtColonel,
-        PieceType.Private,
-        PieceType.General5,
-        PieceType.Flag,
-        PieceType.Spy,
-        PieceType.General1,
-        PieceType.Private,
-        PieceType.General2,
-        PieceType.Major
+        PieceType.General1
 
     };
 

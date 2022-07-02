@@ -25,11 +25,13 @@ public class AI_Agent : MonoBehaviour
         BoardState currentBoard = new();
         currentBoard.SetUp(board);
 
-        GenerateChildBoardStates(currentBoard, true, 0, 4, 12, 10);
-        GenerateChildBoardStatesCapture(currentBoard, true, 0, 4, 12, 10);
+        GenerateChildBoardStates(currentBoard, true, 0, 4, 15, 4);
+        GenerateChildBoardStatesCapture(currentBoard, true, 0, 4, 15, 8);
 
 
         float bestScore = FindBestScore(currentBoard);
+        Debug.Log("Score: " + bestScore);
+
         BoardState favorableBoard = FindBestMove(currentBoard, moveIndex);
 
         /*
@@ -40,7 +42,6 @@ public class AI_Agent : MonoBehaviour
         */
 
         AgentMovePiece(favorableBoard);
-
 
         pieceManager.SwitchSides(Color.black);
         EndTurn();
@@ -249,8 +250,8 @@ public class AI_Agent : MonoBehaviour
 
     private BoardState FindBestMove(BoardState currentBoard, int index)
     {
-        Debug.Log("current board moves: " + currentBoard.children.Count);
-        Debug.Log("index: " + index);
+        //Debug.Log("current board moves: " + currentBoard.children.Count);
+        //Debug.Log("index: " + index);
         return currentBoard.children[index];
     }
 
