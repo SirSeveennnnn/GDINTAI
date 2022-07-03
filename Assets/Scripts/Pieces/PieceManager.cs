@@ -32,6 +32,7 @@ public class PieceManager : MonoBehaviour
 
     private List<BasePiece> whitePieces = null;
     private List<BasePiece> blackPieces = null;
+    private int randSetUp = -1;
     private int countID = 0;
     public bool gameOver = false;
 
@@ -83,7 +84,32 @@ public class PieceManager : MonoBehaviour
 
     };
 
-    private PieceType[] ai_PieceOrder = new PieceType[21]
+    private PieceType[] ai_PieceOrder1 = new PieceType[21]
+    {
+        PieceType.Colonel,
+        PieceType.Private,
+        PieceType.General3,
+        PieceType.General4,
+        PieceType.Lieutentant1,
+        PieceType.Private,
+        PieceType.Captain,
+        PieceType.Private,
+        PieceType.Spy,
+        PieceType.Sergeant,
+        PieceType.Private,
+        PieceType.Lieutentant2,
+        PieceType.LtColonel,
+        PieceType.Private,
+        PieceType.General5,
+        PieceType.Flag,
+        PieceType.Spy,
+        PieceType.General1,
+        PieceType.Private,
+        PieceType.General2,
+        PieceType.Major
+    };
+
+    private PieceType[] ai_PieceOrder2 = new PieceType[21]
     {
         PieceType.Private,
         PieceType.Spy,
@@ -106,16 +132,44 @@ public class PieceManager : MonoBehaviour
         PieceType.Lieutentant1,
         PieceType.Private,
         PieceType.General1
-
     };
+
+    private PieceType[] ai_PieceOrder3 = new PieceType[21]
+    {
+       PieceType.Private,
+       PieceType.General5,
+       PieceType.Spy,
+       PieceType.LtColonel,
+       PieceType.Lieutentant2,
+       PieceType.General4,
+       PieceType.Private,
+       PieceType.Private,
+       PieceType.Lieutentant1,
+       PieceType.General2,
+       PieceType.Private,
+       PieceType.General3,
+       PieceType.Spy,
+       PieceType.Major,
+       PieceType.Captain,
+       PieceType.Private,
+       PieceType.General1,
+       PieceType.Flag,
+       PieceType.Colonel,
+       PieceType.Private,
+       PieceType.Sergeant
+    };
+
 
     public GameManager gameManager;
     public DeadListManager deadManager;
 
-    
+
 
     public void Setup(Board board)
     {
+        System.Random rnd = new();
+        randSetUp = rnd.Next(3);
+
         whitePieces = CreatePieces(Color.white, new Color32(255, 255, 255, 255), board);
         blackPieces = CreatePieces(Color.black, new Color32(255, 255, 255, 255), board);
 
@@ -140,11 +194,16 @@ public class PieceManager : MonoBehaviour
 
             if (teamColor == Color.white)
             {
-                 key = pieceOrder[i];
+                key = pieceOrder[i];
             }
             else if (teamColor == Color.black)
             {
-                 key = ai_PieceOrder[i];
+                if (randSetUp == 0)
+                    key = ai_PieceOrder1[i];
+                else if (randSetUp == 1)
+                    key = ai_PieceOrder2[i];
+                else if (randSetUp == 2)
+                    key = ai_PieceOrder3[i];
             }
 
 
@@ -153,7 +212,7 @@ public class PieceManager : MonoBehaviour
             newPiece.rank = pieceRanks[key];
             newPiece.pieceType = key;
             AssignSprite(teamColor, newPiece.pieceType, pieceImg);
-            
+
             newPieces.Add(newPiece);
             newPiece.Setup(teamColor, spriteColor, this);
             newPiece.ID = countID; countID++;
@@ -224,7 +283,7 @@ public class PieceManager : MonoBehaviour
 
     }
 
-    private void PlacePieces(int bottomRow,int topRow, List<BasePiece> pieces, Board board)
+    private void PlacePieces(int bottomRow, int topRow, List<BasePiece> pieces, Board board)
     {
         int piece = 0;
         for (int i = bottomRow; i < topRow; i++)
@@ -260,7 +319,7 @@ public class PieceManager : MonoBehaviour
         {
             //GGs screen
             gameManager.EndGame(color);
-            
+
         }
 
         bool isBlacksTurn = color == Color.white ? true : false;
@@ -270,9 +329,4 @@ public class PieceManager : MonoBehaviour
     }
 
 }
-
-    
-
-
-
 

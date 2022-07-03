@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardData 
+public class BoardData
 {
     public CellData[,] allCells;
 
@@ -37,7 +37,7 @@ public class BoardData
             }
         }
     }
-    
+
 
     public void CopyCellData(CellData[,] copyCell)
     {
