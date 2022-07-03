@@ -17,7 +17,7 @@ public class BoardData
                 CellData temp = new();
                 temp.row = copyCell[i, j].boardPosition.y;
                 temp.column = copyCell[i, j].boardPosition.x;
-                
+
 
                 if (copyCell[i, j].currentPiece != null && copyCell[i, j].currentPiece.color == Color.black)
                 {
@@ -36,9 +36,6 @@ public class BoardData
                 allCells[i, j] = temp;
             }
         }
-
-        //allCells = (Cell[,])copyCell.Clone();
-        //allCells = copyCell;
     }
     
 
