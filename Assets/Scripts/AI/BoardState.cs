@@ -112,7 +112,7 @@ public class BoardState
                                     KeyValuePair<CellData, CellData> move = new(cell, board.allCells[col, row]);
                                     agentMoves.Add(move);
                                     agentSaveFlagMoves.Add(move);
-                                    opennessScore += 2.1f;
+                                    opennessScore += 5.1f;
                                 }
                             }
                             // check if it's a capturing move
@@ -121,7 +121,7 @@ public class BoardState
                                 KeyValuePair<CellData, CellData> capturingMove = new(cell, board.allCells[col, row]);
                                 capturingMoves.Add(capturingMove);
 
-                                offenseScore += (GetPieceHeuristic(cell.pieceType) - (overallAgentPieceWeight / simulatedAgentPieces.Count)) * 1.5f;
+                                offenseScore += (GetPieceHeuristic(cell.pieceType) - (overallAgentPieceWeight / simulatedAgentPieces.Count));
                             }
                             // check if it's just a normal move
                             else if (board.allCells[col, row].pieceID == -1)
@@ -132,7 +132,11 @@ public class BoardState
                                 if (!openCells.Contains(board.allCells[col, row])) // check list if cell is not yet an element 
                                 {
                                     openCells.Add(board.allCells[col, row]);
-                                    opennessScore++;
+
+                                    if (GetPieceHeuristic(cell.pieceType) > 4.0f)
+                                        opennessScore += 4.3f;
+                                    else
+                                        opennessScore += 2.1f;
                                 }
                             }
                         }
@@ -173,7 +177,7 @@ public class BoardState
                                 if (board.allCells[col, row].color == Color.black && !agentCells.Contains(board.allCells[col, row]))
                                 {
                                     agentCells.Add(board.allCells[col, row]);
-                                    defenseScore += 1.2f * GetPieceHeuristic(PieceType.General5);
+                                    defenseScore += 4.7f;
                                 }
 
                                 if (board.allCells[col, row].color == Color.black && board.allCells[col, row].pieceType == PieceType.Flag)
@@ -205,7 +209,7 @@ public class BoardState
         {
             if (cell.row < 4)
             {
-                offenseScore += 1 * GetPieceHeuristic(cell.pieceType);
+                offenseScore += 1 * GetPieceHeuristic(cell.pieceType) * (float)simulatedAgentPieces.Count / ((float)simulatedPlayerPieces.Count * 2);
             }
         }
     }
@@ -216,19 +220,19 @@ public class BoardState
         {
             if (cell.row == 4)
             {
-                offenseScore += 10;
+                offenseScore += 4;
             }
             if (cell.row == 5)
             {
-                offenseScore += 25;
+                offenseScore += 8;
             }
             if (cell.row == 6)
             {
-                offenseScore += 50;
+                offenseScore += 18;
             }
             if (cell.row == 7)
             {
-                offenseScore += 100;
+                offenseScore += 35;
             }
         }
     }
@@ -236,9 +240,9 @@ public class BoardState
 
     private void CalculateHeuristic()
     {
-        float overallOffense = offenseScore * ((float)simulatedAgentPieces.Count / (float)simulatedPlayerPieces.Count);
-        float overallDefense = defenseScore * ((float)simulatedPlayerPieces.Count / (float)simulatedAgentPieces.Count);
-        float overallOpenness = (opennessScore / (float)simulatedAgentPieces.Count) * 1.3f;
+        float overallOffense = offenseScore + (simulatedAgentPieces.Count - simulatedPlayerPieces.Count) * 1.1f;
+        float overallDefense = defenseScore + (simulatedPlayerPieces.Count - simulatedAgentPieces.Count) * 1.41f;
+        float overallOpenness = (opennessScore / (float)simulatedAgentPieces.Count) * 1.4f;
 
         score = (overallOffense - overallDefense) + overallOpenness;
 

@@ -34,7 +34,7 @@ public class AI_Agent : MonoBehaviour
         // initialize search space with the children board states
         searchSpace = new();
         searchSpace.Initialize(currentBoard);
-        searchSpace.GenerateChildBoardStates(currentBoard, true, 0, 3, 15, 15);
+        searchSpace.GenerateChildBoardStates(currentBoard, true, 0, 4, 12, 12);
 
 
         // get the best score among all board states
@@ -42,6 +42,12 @@ public class AI_Agent : MonoBehaviour
         BoardState favorableBoard = FindBestMove(currentBoard, bestMove.Value);
         AgentMovePiece(favorableBoard);
         AgentCheckGameOver(gameBoard);
+
+        //Debug.Log("Offense " + favorableBoard.offenseScore + " vs current offense " + currentBoard.score);
+        //Debug.Log("Defense " + favorableBoard.defenseScore + " vs current defense " + currentBoard.defenseScore);
+        //Debug.Log("Openness " + favorableBoard.opennessScore + " vs current openness " + currentBoard.opennessScore);
+        //Debug.Log("Final Score " + favorableBoard.score + " vs current score " + currentBoard.score + " piecetype " + favorableBoard.move.Key.pieceType);
+
 
         // end turn
         pieceManager.SwitchSides(Color.black);

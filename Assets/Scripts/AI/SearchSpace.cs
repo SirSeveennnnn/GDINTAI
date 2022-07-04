@@ -206,9 +206,23 @@ public class SearchSpace
         moveRow = move.Value.row;
         moveCol = move.Value.column;
 
-        int piece = possibleBoard.allCells[col, row].pieceID;
+
+        possibleBoard.allCells[moveCol, moveRow].pieceID = possibleBoard.allCells[col, row].pieceID;
+
+        if (possibleBoard.allCells[col, row].color == Color.black)
+        {
+            possibleBoard.allCells[moveCol, moveRow].pieceType = possibleBoard.allCells[col, row].pieceType;
+            possibleBoard.allCells[moveCol, moveRow].color = Color.black;
+        }
+        else if (possibleBoard.allCells[col, row].color == Color.white)
+        {
+            possibleBoard.allCells[moveCol, moveRow].pieceType = PieceType.Unknown;
+            possibleBoard.allCells[moveCol, moveRow].color = Color.white;
+        }
+
         possibleBoard.allCells[col, row].pieceID = -1;
-        possibleBoard.allCells[moveCol, moveRow].pieceID = piece;
+        possibleBoard.allCells[col, row].pieceType = PieceType.Unknown;
+        possibleBoard.allCells[col, row].color = Color.clear;
     }
 
 
@@ -226,7 +240,7 @@ public class SearchSpace
         {
             rank = (int)possibleBoard.allCells[col, row].pieceType;
 
-            if (rank < 5)
+            if (rank < 4)
             {
                 possibleBoard.allCells[moveCol, moveRow].pieceID = possibleBoard.allCells[col, row].pieceID;
                 possibleBoard.allCells[moveCol, moveRow].pieceType = possibleBoard.allCells[col, row].pieceType;
@@ -237,7 +251,7 @@ public class SearchSpace
         {
             rank = (int)possibleBoard.allCells[moveCol, moveRow].pieceType;
 
-            if (rank >= 5)
+            if (rank >= 4)
             {
                 possibleBoard.allCells[moveCol, moveRow].pieceID = possibleBoard.allCells[col, row].pieceID;
                 possibleBoard.allCells[moveCol, moveRow].pieceType = possibleBoard.allCells[col, row].pieceType;
