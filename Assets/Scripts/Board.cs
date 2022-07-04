@@ -84,4 +84,6 @@ public class Board : MonoBehaviour
     {
         return allCells[row, col];
     }
+
+    
 }

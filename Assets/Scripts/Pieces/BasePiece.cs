@@ -10,6 +10,7 @@ public class BasePiece : EventTrigger
     public int ID;
     public Color color = Color.clear;
 
+    [SerializeField]
     private Cell originalCell = null;
     private Cell currentCell = null;
 
@@ -183,6 +184,9 @@ public class BasePiece : EventTrigger
         else if (GameManager.pregame == false)
         {
             Move();
+
+            
+
             pieceManager.SwitchSides(color);
             pieceManager.agent.AgentMove();
         }
@@ -256,15 +260,12 @@ public class BasePiece : EventTrigger
             return;
         }
 
-        if (this.pieceType == PieceType.Flag && this.color == Color.white && targetCell.boardPosition.y == 8)
+        
+        if (this.pieceType == PieceType.Flag && this.color == Color.white && targetCell.boardPosition.y == 7)
         {
             pieceManager.gameOver = true;
         }
 
-        if (this.pieceType == PieceType.Flag && this.color == Color.black && targetCell.boardPosition.y == 0)
-        {
-            pieceManager.gameOver = true;
-        }
 
         currentCell.currentPiece = null;
         currentCell = targetCell;
@@ -272,4 +273,6 @@ public class BasePiece : EventTrigger
         transform.position = currentCell.transform.position;
         targetCell = null;
     }
+
+
 }

@@ -315,6 +315,7 @@ public class PieceManager : MonoBehaviour
 
     public void SwitchSides(Color color)
     {
+
         if (gameOver)
         {
             //GGs screen
@@ -327,6 +328,8 @@ public class PieceManager : MonoBehaviour
         SetInteractive(whitePieces, !isBlacksTurn);
         //SetInteractive(blackPieces, isBlacksTurn); //for multiplayer
     }
+
+
 
 }
 

@@ -48,14 +48,17 @@ public class BoardState
         ScanPlayerMoves();
 
         FindOffensivePieces();
+        
         CalculateHeuristic();
+
+        FindEnemyAttackers();
         CheckFlagAtRisk();
 
 
         //Debug.Log("offense score:" + offenseScore);
         //Debug.Log("defensive score:" + defenseScore);
         //Debug.Log("openness score:" + opennessScore);
-        //Debug.Log("Final Score" + score);
+        Debug.Log("Final Score" + score);
     }
 
 
@@ -207,6 +210,29 @@ public class BoardState
         }
     }
 
+    private void FindEnemyAttackers()
+    {
+        foreach (CellData cell in simulatedPlayerPieces)
+        {
+            if (cell.row == 4)
+            {
+                offenseScore += 10;
+            }
+            if (cell.row == 5)
+            {
+                offenseScore += 25;
+            }
+            if (cell.row == 6)
+            {
+                offenseScore += 50;
+            }
+            if (cell.row == 7)
+            {
+                offenseScore += 100;
+            }
+        }
+    }
+
 
     private void CalculateHeuristic()
     {
@@ -214,7 +240,7 @@ public class BoardState
         float overallDefense = defenseScore * ((float)simulatedPlayerPieces.Count / (float)simulatedAgentPieces.Count);
         float overallOpenness = (opennessScore / (float)simulatedAgentPieces.Count) * 1.3f;
 
-        score = overallOffense - overallDefense + overallOpenness;
+        score = (overallOffense - overallDefense) + overallOpenness;
 
         //Debug.Log("Offense: " + offenseScore + "    overall Offense: " + overallOffense);
         //Debug.Log("Defense: " + defenseScore + "    overall Defense: " + overallDefense);

@@ -97,4 +97,5 @@ public class GameManager : MonoBehaviour
         pauseWindow.SetActive(!pauseWindow.activeSelf);
     }
 
+   
 }

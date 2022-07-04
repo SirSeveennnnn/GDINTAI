@@ -41,7 +41,7 @@ public class AI_Agent : MonoBehaviour
         KeyValuePair<float, int> bestMove = FindBestScore(currentBoard, 0);
         BoardState favorableBoard = FindBestMove(currentBoard, bestMove.Value);
         AgentMovePiece(favorableBoard);
-
+        AgentCheckGameOver(gameBoard);
 
         // end turn
         pieceManager.SwitchSides(Color.black);
@@ -93,5 +93,18 @@ public class AI_Agent : MonoBehaviour
     {
         board = null;
         searchSpace = null;
+    }
+
+    private void AgentCheckGameOver(Board board)
+    {
+        for (int i = 0; i < 9; i++)
+        {
+         
+            if (board.allCells[i, 0].currentPiece != null && board.allCells[i, 0].currentPiece.pieceType == PieceType.Flag && board.allCells[i, 0].currentPiece.color == Color.black)
+            {
+                pieceManager.gameOver = true;
+            }
+            
+        }
     }
 }
