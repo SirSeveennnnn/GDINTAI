@@ -58,7 +58,7 @@ public class BoardState
         //Debug.Log("offense score:" + offenseScore);
         //Debug.Log("defensive score:" + defenseScore);
         //Debug.Log("openness score:" + opennessScore);
-        Debug.Log("Final Score" + score);
+        //Debug.Log("Final Score" + score);
     }
 
 
